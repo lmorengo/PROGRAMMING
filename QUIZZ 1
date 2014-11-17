@@ -1,0 +1,44 @@
+setwd("/Users/LaureanoMatías/Documents/R WORKING DIRECTORY") 
+dir()
+#leo datos#
+datos <- read.csv("hw1_data.csv")
+datos
+#first 2 lines#
+head(datos,2)
+#contador de filas
+nrow(datos)
+#last 2 lines#
+tail(datos,2)
+#selecciono los datos de una fila columna
+datos[47,1]
+#o bien...
+datos[47,"Ozone"]
+
+#CONTADOR DE MISSINGS#
+#selecciono una columna
+x<-datos$Ozone
+sum(is.na(x))
+
+
+# MEDIA ARITMETICA
+#la funcion mean trabaja sin nulos, caso contrario el resultado es nulo
+#hay que sacarles los nulos de la siguiente manera
+# mean(x[!is.na(x)]) en donde x es el set al que le quiero sacar la media.
+a<-datos[,1]
+mean(a[!is.na(a)])
+
+#armo un subset con filtros y le calcula la media a una columna
+subset <- subset(datos, Ozone > 31 & Temp > 90)
+c<-subset$Solar.R
+#c<-subset[,2] otra forma de definir la columna
+mean(c[!is.na(c)])
+
+#What is the mean of "Temp" when "Month" is equal to 6?#
+subset2 <- subset(datos, Month==6)
+d<-subset2$Temp
+mean(d)
+
+#What was the maximum ozone value in the month of May (i.e. Month = 5)?#
+subset3 <- subset(datos, Month==5)
+e<-subset3$Ozone
+max(e[!is.na(e)])
