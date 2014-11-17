@@ -1,0 +1,50 @@
+## VER PDF EN
+##file:///C:/Users/LaureanoMat%C3%ADas/Downloads/Practice_Assignment.pdf 
+
+setwd("/Users/LaureanoMatías/Documents/R WORKING DIRECTORY") 
+dir()
+getwd
+## QUÈ TABLAS TENGO EN LA CARPETA DIET_DATA??
+list.files("diet_data")
+## IMPORTO LA TABLA ANDY
+andy <- read.csv("diet_data/Andy.csv")
+head(andy)
+length(andy$Day)
+## RESUMEN DE LA TABLA (DIMENSION, STR, RESUMEN, NOMBRES)
+dim(andy)
+str(andy)
+summary(andy)
+names(andy)
+
+files <- list.files("diet_data")
+files
+files[1]
+
+files_full <- list.files("diet_data", full.names=TRUE)
+files_full
+
+head(read.csv(files_full[3]))
+andy_david <- rbind(andy, read.csv(files_full[2]))
+andy_david
+
+dat <- data.frame()
+for (i in 1:5) {
+    dat <- rbind(dat, read.csv(files_full[i]))
+}
+mean(dat$Weight, na.rm=TRUE)
+
+
+
+weightmedian <- function(directory, day) {
+    files_list <- list.files(directory, full.names = TRUE) #creates a list of files
+    dat <- data.frame() #creates an empty data frame
+    for (i in 1:5) {
+        # loops through the files, rbinding them together
+        dat <- rbind(dat, read.csv(files_list[i]))
+    }
+    dat_subset <- dat[which(dat[, "Day"] == day), ] #subsets the rows that match the 'day' argument
+    median(dat_subset[, "Weight"], na.rm = TRUE) #identifies the median weight
+    # while stripping out the NAs
+}
+weightmedian(directory = "diet_data", day = 20)
+
